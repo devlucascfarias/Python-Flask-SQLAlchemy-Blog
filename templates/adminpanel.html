@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="static/style.css">
+    <link rel="icon" href="static/img/icon.png">
+    <script src="https://cdn.ckeditor.com/4.16.0/standard/ckeditor.js"></script>
+    <title>Admin Panel</title>
+</head>
+
+<body>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        {% for category, message in messages %}
+            <div class="alert alert-{{ category }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+{% endwith %}
+
+
+    <div class="apresentation">
+
+        <nav class="navbar navbar-expand-lg navbar-light bg-dark d-flex justify-content-center">
+
+            <div>
+                <a class="navbar-brand item logo">lucascfarias</a>
+                <a class="navbar-brand items" href="/">HOME</a>
+                <a class="navbar-brand items" href="{{ url_for('delete_all_posts') }}">Delete All Posts</a>
+                <a class="navbar-brand items" href="{{ url_for('delete_all_comments') }}">Delete All Comments</a>
+                {% if 'email' not in session %}
+                    <a class="navbar-brand items" href="{{ url_for('login') }}">LOGIN WITH GOOGLE</a>
+                {% else %}
+                    <a class="navbar-brand items">Hello, {{ session['name'] }}</a>
+                {% endif %}
+            </div>
+            {% if 'email' in session %}
+                <div>
+                    <a class="navbar-brand items" href="{{ url_for('logout') }}">LOGOUT</a>
+                </div>
+            {% endif %}
+
+        </nav>
+
+    <div class="apresentation-container">
+
+                    <h3 style="margin: 20px;">Share</h3>
+
+                    <div class="user-main-menu">
+
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-2">
+                                        <img class="avatar" src="{{ session['user_image'] }}" style="width: 40px; margin-right: 5px;">
+                                    </div>
+                                    <div class="col-10">
+                                        <form action="/post" method="post">
+                                            <textarea id="editor" type="text" class="form-control" name="content" placeholder="What's up?" required></textarea>
+                                            <input type="submit" class="btn btn-outline-light" value="Post">
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Importe o CKEditor 4 -->
+                        <script src="https://cdn.ckeditor.com/4.16.0/standard/ckeditor.js"></script>
+                        
+                        <script>
+                            // Inicialize o editor de texto
+                            CKEDITOR.replace('editor');
+                        </script>
+
+                        <h3 style="margin: 20px;">Your recents posts</h3> 
+                        
+                        {% for post in own_posts %}
+                        <div class="card">
+
+                            <div class="user-name-card">
+
+                                <a href=""> #{{ post.id }}</a>                              
+
+                            </div>
+
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-2">
+                                        <img class="avatar" src="{{ session['user_image'] }}" style="width: 40px; margin-right: 5px;">
+                                    </div>
+                                    <div class="col-10">
+                                        <div class="post-content">
+                                            {{ post.content|replace('\n', '<br/>')|safe }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="actions-card" style="background-color: rgb(94, 92, 92);">
+                                <form action="{{ url_for('like_post', post_id=post.id) }}" method="post" style="display: inline;">
+                                    <text class="action-count">{{ post.likes|length }}</text>
+                                    <a href="" onclick="this.closest('form').submit();return false;" class="action like">
+                                        <img src="static/actions/like.png">
+                                    </a>
+                                </form>
+                        
+                                <text class="action-count">{{ post.comments|length }}</text>
+                                <a href="#collapseComments{{ post.id }}" class="action like" data-toggle="collapse">
+                                    <img src="static/actions/comment.png">
+                                </a>
+                        
+                                <a class="action share"><img src="static/actions/share.png"></a>
+
+                                <form action="{{ url_for('delete_post', post_id=post.id) }}" method="post" style="display: inline;">
+                                    <a href="" onclick="this.closest('form').submit();return false;" class="action delete">
+                                        <img src="static/actions/delete.png">
+                                    </a>
+
+                                {% if session['email'] == post.user_id %}
+                                <a href="{{ url_for('edit_post', post_id=post.id) }}" class="action like">
+                                    <img src="static/actions/edit.png">
+                                </a>
+                                {% endif %}
+
+                            </div>
+                            </div>
+
+                            <div id="collapseComments{{ post.id }}" class="collapse">
+
+                                <div class="add-comment">
+    
+                                    <form action="{{ url_for('comment_post', post_id=post.id) }}" method="post">
+                                         <img href="" class="avatar ml-auto" src="{{ session['user_image'] }}" style="width: 30px; margin-bottom: 15px;">
+    
+                                        <textarea class="form-control" name="content" placeholder="Add a comment..." required></textarea>
+                                        <button type="submit" class="btn btn-outline-light" style="margin-bottom: 10px;">Comment</button>
+                                    </form>
+                                </div>
+    
+                                <div class="separate-post-comment" style="margin-top:50px;"></div>
+    
+                                {% for comment in post.comments %}
+                                <div class="comment-card">
+                                    <img class="avatar" src="{{ comment.user_image }}" alt="User Image" style="width: 40px; margin: 10px;">
+                                    <a href="" class="user-name-card">{{ comment.user_name }}</a>
+                                    <div class="card-comment">
+                                        {{ comment.content|replace('\n', '<br/>')|safe }}
+    
+                                        <div class="comment-actions">
+                                            {% if session['email'] == comment.user_id %}
+                                            <form action="{{ url_for('delete_comment', comment_id=comment.id) }}" method="post" style="display: inline;">
+                                                <a href="" onclick="this.closest('form').submit();return false;" class="action delete">
+                                                    <img src="static/actions/delete.png">
+                                                </a>
+                                            </form>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            </div>
+
+                        </div>
+                        {% endfor %}
+                    </div>
+
+                    <h3 style="margin: 20px;">Comments</h3>
+
+                    {% for comment in comments %}
+                    <div class="card">
+                        <div class="user-name-card">
+                            <a href="">{{ comment.user_name }}</a>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-2">
+                                    <img class="avatar" src="{{ comment.user_image }}" alt="User Image" style="width: 40px; margin: 10px;">
+                                </div>
+                                <div class="col-10">
+                                    <p>{{ comment.content|replace('\n', '<br/>')|safe }}</p>
+                                    {% if session['email'] == 'lucascfp2011@gmail.com' %}
+                                    <form action="{{ url_for('delete_comment', comment_id=comment.id) }}" method="post" style="display: inline;">
+                                        <a href="" onclick="this.closest('form').submit();return false;" class="action delete">
+                                            <img src="static/actions/delete.png">
+                                        </a>
+                                    </form>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+</body>
+
+</html>

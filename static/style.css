@@ -1,0 +1,240 @@
+body {
+    background-image: url(img/apresentation.jpg);
+    color: white;
+    font-size: 18px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* horizontal offset, vertical offset, blur radius, color */
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+
+/*
+
+.apresentation {
+
+    width: 100%;
+    height: 800px;
+    background-image: url(img/apresentation.jpg);
+    background-size: cover;  
+    background-position: center; 
+
+    }
+    
+*/
+    
+
+
+.apresentation-container {
+    margin: 50px;
+}
+.navbar {
+    background-color: transparent !important;
+    width: 100%;
+    height: 60px;
+}
+
+.navbar a {
+    position: relative;
+    color: white !important;
+    font-size: 13px;
+    font-weight: 500;
+    margin-right: 30px;
+    text-shadow: 2px 2px 4px #000000;
+}
+
+.navbar a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 1px;
+    bottom: 0;
+    left: 0;
+    background: #ddd;
+    transition: width .3s;
+}
+
+.navbar a:hover::after {
+    width: 100%;
+}
+
+
+.avatar {
+    border-radius: 100%;
+    box-shadow: 0 2px 8px 0 rgba(255, 255, 255, 0.2);
+    border: 1px solid white;
+    width: 50px;
+    margin-right: 10px;
+    transition: transform 0.5s;
+}
+
+.avatar:hover {
+    transition: transform 0.5s;
+    transform: scale(1.1);
+}
+
+.user-name {
+    margin-right: 10px;
+}
+
+a {
+    color: white;
+}
+
+a:hover {
+    color: white;
+}
+
+.user-badge {
+    margin-right: 40px;
+}
+
+.badge {
+    font-size: 14px;
+}
+
+.card {
+    background: linear-gradient(to right, rgb(20, 20, 20), rgb(31, 31, 31));
+    color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    transition: 0.3s;
+    margin: 20px;
+    padding: 20px;
+}
+
+/* .card:hover {
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+    transform: scale(1.01);
+} */
+
+.user-name-card {
+    margin: 5px;
+    font-size: 16px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* horizontal offset, vertical offset, blur radius, color */
+}
+
+.btn {
+    margin-top: 10px;
+    float: right;
+}
+
+.post-message {
+    margin-top: 10px;
+}
+
+.post-content {
+    font-size: 13px;
+}
+
+.action-count {
+    font-size: 14px;
+    color: #dfdada;
+}
+
+.comment-card {
+    background: linear-gradient(to right, rgb(34, 34, 34), rgb(27, 27, 27));
+
+}
+
+.card-comment {
+    padding: 10px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* horizontal offset, vertical offset, blur radius, color */
+    font-size: 13px;
+    margin-left: 0px;
+    border-bottom: 1px solid #575454; /* Adiciona uma borda preta de 1px na parte inferior */
+
+
+}
+
+.form-control {
+    background: linear-gradient(to right, rgb(34, 34, 34), rgb(27, 27, 27));
+    color: #d3d3d3;
+}
+
+.form-control:focus {
+    color: #fff;
+}
+
+.form-control img {
+    margin-bottom: 5px;
+}
+
+.add-comment {
+    margin-top: 10px;
+    padding: 10px;
+
+}
+
+
+.user-feed-menu {
+float: right;
+}
+
+.actions-card {
+    width: 100%;
+    height: 100px;
+    background-color: transparent !important;
+}
+
+.action {
+    margin-top: 75px;
+    margin-right: 40px;
+    display: inline-block;
+}
+
+.action img {
+    width: 30px;
+    height: 30px;
+    transition: transform 0.5s;
+}
+
+.action img:hover {
+    cursor: pointer;
+    width: 30px;
+    height: 30px;
+    transition: transform 0.5s;
+    transform: scale(1.1);
+    box-shadow:rgb(255, 255, 255);
+}
+
+.action.delete button {
+    background: none;
+    border: none;
+    padding: 0;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.action.delete button {
+    background: none;
+    border: none;
+    padding: 0;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.comment-actions {
+    display: flex;
+    justify-content: flex-end;
+    padding: 10px 0;
+    width: 100%; 
+}
+
+.comment-actions .action {
+    margin-left: 10px;
+}
+
+.comment-actions .action img {
+    width: 23px;
+    height: 23px;
+}
+
+
+.separate-post-comment {
+    border-bottom: 1px solid #575454; 
+}
+
+.footer {
+    flex-shrink: 0;
+}
