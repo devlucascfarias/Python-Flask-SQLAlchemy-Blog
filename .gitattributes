@@ -4,5 +4,4 @@
 $ cat .gitattributes
 *.html linguist-language=Python
 
-*.css linguist-language=Python
 
