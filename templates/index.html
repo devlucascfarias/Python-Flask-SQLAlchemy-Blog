@@ -6,33 +6,34 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <link rel="stylesheet" href="static/style.css">
     <link rel="icon" href="static/img/icon.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>lucascfarias</title>
 </head>
 <body>
 
     <div class="apresentation">
 
-        <nav class="navbar navbar-expand-lg navbar-light bg-dark d-flex justify-content-center">
-            <div>
-                <a class="navbar-brand item logo">lucascfarias</a>
-                <a class="navbar-brand items" href="/">HOME</a>
-                <a class="navbar-brand items" href="/">ABOUT</a>
-                <a class="navbar-brand items" href="">CONTACT</a> 
-                {% if 'email' not in session %}
-                    <a class="navbar-brand items" href="{{ url_for('login') }}">LOGIN WITH GOOGLE</a>
-                {% else %}
-                    <a class="navbar-brand items">Hello, {{ session['name'] }}</a>
-                {% endif %}
-            </div>
-            {% if 'email' in session %}
-                <div>
-                {% if session['email'] == 'lucascfp2011@gmail.com' %}
-                    <a class="navbar-brand items" href="{{ url_for('adminpanel') }}">Admin Panel</a>
-                {% endif %}
-                    <a class="navbar-brand items" href="{{ url_for('logout') }}">LOGOUT</a>
+        <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
+            <header class="masthead mb-auto navbar">
+                <div class="inner">
+                    <h3 class="masthead-brand">lucascfarias</h3>
+                    <nav class="nav nav-masthead justify-content-center">
+                        <a class="nav-item active" href="#">Home</a>
+                        <a class="nav-item" href="/">ABOUT</a>
+                        <a class="nav-item" href="">CONTACT</a>
+                        {% if 'email' not in session %}
+                            <a class="nav-item" href="{{ url_for('login') }}">LOGIN WITH GOOGLE</a>
+                        {% else %}
+                            <a class="nav-item">Hello, {{ session['name'] }}</a>
+                            {% if session['email'] == 'lucascfp2011@gmail.com' %}
+                                <a class="nav-item" href="{{ url_for('adminpanel') }}">Admin Panel</a>
+                            {% endif %}
+                            <a class="nav-item" href="{{ url_for('logout') }}">LOGOUT</a>
+                        {% endif %}
+                    </nav>
                 </div>
-            {% endif %}
-        </nav>
+            </header>
+        </div>
     
     <div class="apresentation-container">
 
