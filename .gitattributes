@@ -2,4 +2,7 @@
 * text=auto
 
 $ cat .gitattributes
-*.html css linguist-language=Python
+*.html linguist-language=Python
+
+*.css linguist-language=Python
+
