@@ -238,3 +238,24 @@ float: right;
 .footer {
     flex-shrink: 0;
 }
+
+/* CSS para telas com largura maior que 1200px */
+@media (min-width: 1200px) {
+    .navbar-brand {
+        font-size: 2em;
+    }
+}
+
+/* CSS para telas com largura entre 768px e 1199px */
+@media (min-width: 768px) and (max-width: 1199px) {
+    .navbar-brand {
+        font-size: 1.5em;
+    }
+}
+
+/* CSS para telas com largura menor que 768px */
+@media (max-width: 767px) {
+    .navbar-brand {
+        font-size: 1em;
+    }
+}
