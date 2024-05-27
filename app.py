@@ -80,10 +80,11 @@ def adminpanel():
 @app.route('/post', methods=['POST'])
 def post():
     content = request.form.get('content')
+    image_url = request.form.get('image_url')
     user_id = session['email']  
     user_image = session['user_image']  
     user_name = session['name']  
-    post = Post(content=content, user_id=user_id, user_name=user_name, user_image=user_image)  
+    post = Post(content=content, user_id=user_id, user_name=user_name, user_image=user_image, image_url=image_url)  # modified line
     db.session.add(post)
     db.session.commit()
     return redirect(url_for('adminpanel'))

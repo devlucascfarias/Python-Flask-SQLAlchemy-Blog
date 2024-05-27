@@ -3,6 +3,7 @@ from datetime import datetime
 
 class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    image_url = db.Column(db.String(500))
     user_name = db.Column(db.String(500), nullable=False)
     comments = db.relationship('Comment', backref='post', lazy=True, cascade="all,delete")
     content = db.Column(db.String(500), nullable=False)
