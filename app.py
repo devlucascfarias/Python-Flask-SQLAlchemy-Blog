@@ -67,7 +67,7 @@ def login():
 @app.route('/adminpanel')
 def adminpanel():
     user_id = session.get('email', None)  
-    if user_id != 'lucascfp2011@gmail.com':
+    if user_id != 'user@admin.com':
         abort(403)  
 
     name = session.get('name', 'Guest')
@@ -146,7 +146,7 @@ def delete_comment(comment_id):
 
 @app.route('/delete_all_comments', methods=['GET', 'POST'])
 def delete_all_comments():
-    if 'email' not in session or session['email'] != 'lucascfp2011@gmail.com':
+    if 'email' not in session or session['email'] != 'user@admin.com':
         abort(403)
 
     Comment.query.delete()
@@ -158,7 +158,7 @@ def delete_all_comments():
 
 @app.route('/delete_all_posts', methods=['GET', 'POST'])
 def delete_all_posts():
-    if 'email' not in session or session['email'] != 'lucascfp2011@gmail.com':
+    if 'email' not in session or session['email'] != 'user@admin.com':
         abort(403)
 
     Post.query.delete()
@@ -171,7 +171,7 @@ def delete_all_posts():
 @app.route('/edit_post/<int:post_id>', methods=['GET', 'POST'])
 def edit_post(post_id):
     user_id = session.get('email', None)  
-    if user_id != 'lucascfp2011@gmail.com':
+    if user_id != 'user@admin.com':
         abort(403)  
 
     post = Post.query.get(post_id)
