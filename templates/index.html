@@ -18,7 +18,6 @@
 
                     <div>
                         <a class="navbar-brand item logo">lucascfarias</a>
-                        <a class="navbar-brand items active" href="#">Home</a>
                         <a class="navbar-brand items" href="/">About</a>
                         <a class="navbar-brand items" href="">Contact</a>
                         {% if 'email' not in session %}
@@ -50,9 +49,8 @@
                 <h5 class="card-title">{{ post.title }}</h5>
                 <p class="card-text">{{ post.content|truncate(200)|replace('\n', '<br/>')|safe }}</p>
                 <p class="card-text"><small class="text-muted">
-                <img class="avatar" src="{{ post.user_image }}" style="width: 50px; margin-right: 5px;">
-                {{ post.user_name }}</small>
-                <a class="btn btn-outline-light" style="margin-bottom: 10px;" href="{{ url_for('view_post', post_id=post.id) }}">Read post</a>    
+                <img class="avatar" src="{{ post.user_image }}" style="width: 30px; margin-right: 5px;">
+                by {{ post.user_name }}</small>
             </p>
             </div>
             <div class="actions-card" style="background-color: rgb(94, 92, 92);">
@@ -66,6 +64,8 @@
                 <a href="#collapseComments{{ post.id }}" class="action like" data-toggle="collapse">
                     <img src="static/actions/comment.png">
                 </a>
+                <a class="btn btn-outline-light" style="margin-bottom: 10px;" href="{{ url_for('view_post', post_id=post.id) }}">Read post</a>    
+
             </div>
             
             <div id="collapseComments{{ post.id }}" class="collapse">
