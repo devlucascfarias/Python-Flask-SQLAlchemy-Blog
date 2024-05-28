@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="icon" href="{{ url_for('static', filename='img/icon.png') }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>lucascfarias</title>
+</head>
+<body>
+
+    
+    <div class="apresentation">
+
+                <nav class="navbar navbar-expand-lg navbar-light bg-dark d-flex justify-content-center">
+
+                    <div>
+                        <a class="navbar-brand item logo">lucascfarias</a>
+                        <a class="navbar-brand items active" href="{{ url_for('index') }}">Home</a>
+                        <a class="navbar-brand items" href="/">About</a>
+                        <a class="navbar-brand items" href="">Contact</a>
+                        {% if 'email' not in session %}
+                            <a class="navbar-brand items" href="{{ url_for('login') }}">Login with Google</a>
+                        {% else %}
+                            <a class="navbar-brand items">Hello, {{ session['name'] }}</a>
+                            {% if session['email'] == 'lucascfp2011@gmail.com' %}
+                                <a class="navbar-brand items" href="{{ url_for('adminpanel') }}">Admin Panel</a>
+                            {% endif %}
+                            <a class="navbar-brand items" href="{{ url_for('logout') }}">Logout</a>
+                        {% endif %}
+        
+                </nav>
+    
+    <div class="apresentation-container">    
+
+        <h3 style="margin: 20px;">{{ post.title }}</h3>
+
+        <div class="card-group">
+            <div class="card" style="border-radius: 5px;">
+                <img class="post-image" src="{{ post.cover_image_url }}" alt="Post cover image">
+                <div class="card-body">
+                    <h5 class="card-title">{{ post.title }}</h5>
+                    <p class="card-text">{{ post.content|truncate(200)|replace('\n', '<br/>')|safe }}</p>
+                    <p class="card-text"><small class="text-muted">
+                    <img class="avatar" src="{{ post.user_image }}" style="width: 50px; margin-right: 5px;">
+        
+                    {{ post.user_name }}</small></p>
+                </div>
+                <div class="actions-card" style="background-color: rgb(94, 92, 92);">
+                    <form action="{{ url_for('like_post', post_id=post.id) }}" method="post" style="display: inline;">
+                        <text class="action-count">{{ post.likes|length }}</text>
+                        <a href="" onclick="this.closest('form').submit();return false;" class="action like">
+                            <img src="{{ url_for('static', filename='/actions/like.png') }}">
+                        </a>
+                    </form>
+                    <text class="action-count">{{ post.comments|length }}</text>
+                    <a href="#collapseComments{{ post.id }}" class="action like" data-toggle="collapse">
+                        <img src="{{ url_for('static', filename='/actions/comment.png') }}">
+                    </a>
+                </div>
+                
+                <div id="collapseComments{{ post.id }}" class="collapse">
+    
+                    {% if session['email'] %}
+                        <div class="add-comment">
+                            <form action="{{ url_for('comment_post', post_id=post.id) }}" method="post">
+                                <img href="" class="avatar ml-auto" src="{{ session['user_image'] }}" style="width: 30px; margin: 30px;">
+                                <textarea class="form-control" name="content" placeholder="Add a comment..." required></textarea>
+                                <button type="submit" class="btn btn-outline-light" style="margin-bottom: 10px;">Comment</button>
+                            </form>
+                        </div>
+                    {% endif %}
+        
+                        <div class="separate-post-comment" style="margin-top:50px;"></div>
+        
+                        {% for comment in post.comments %}
+                        <div class="comment-card">
+                            <img class="avatar" src="{{ comment.user_image }}" alt="User Image" style="width: 40px; margin: 10px;">
+                            <a href="" class="user-name-card">{{ comment.user_name }}</a>
+                            <div class="card-comment">
+                                {{ comment.content|replace('\n', '<br/>')|safe }}
+        
+                                <div class="comment-actions">
+                                    {% if session['email'] == comment.user_id %}
+                                    <form action="{{ url_for('delete_comment', comment_id=comment.id) }}" method="post" style="display: inline;">
+                                        <a href="" onclick="this.closest('form').submit();return false;" class="action delete">
+                                            <img src="static/actions/delete.png">
+                                        </a>
+                                    </form>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+    
+            </div>
+        </div>
+                    
+
+    <footer class="footer mt-auto py-3">
+        <div class="container">
+          <span class="text-muted"><center>https://github.com/devlucascfarias</center></span>
+        </div>
+      </footer>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+</body>
+</html>

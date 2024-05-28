@@ -4,7 +4,9 @@ from authlib.integrations.flask_client import OAuth
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import func, desc
 from dotenv import load_dotenv
+from werkzeug.utils import secure_filename
 import os
+
 
 
 load_dotenv()
@@ -79,11 +81,19 @@ def adminpanel():
 
 @app.route('/post', methods=['POST'])
 def post():
+    title = request.form.get('title')
+    cover_image = request.files['cover_image']
+    filename = secure_filename(cover_image.filename)
+    cover_image.save(os.path.join('static/img/post_images', filename))
+    cover_image_url = url_for('static', filename='img/' + filename)
+
     content = request.form.get('content')
     user_id = session['email']  
     user_image = session['user_image']  
     user_name = session['name']  
-    post = Post(content=content, user_id=user_id, user_name=user_name, user_image=user_image)  
+
+    post = Post(title=title, content=content, user_id=user_id, user_name=user_name, user_image=user_image, cover_image_url=cover_image_url)
+
     db.session.add(post)
     db.session.commit()
     return redirect(url_for('adminpanel'))
@@ -176,7 +186,7 @@ def edit_post(post_id):
 
     post = Post.query.get(post_id)
     if request.method == 'POST':
-        content = request.form.get('content')  # Use .get() para evitar KeyError
+        content = request.form.get('content')  
         if content is not None:
             post.content = content
             db.session.commit()
@@ -184,8 +194,15 @@ def edit_post(post_id):
         flash('Post edited successfully', 'success')  
 
         return redirect(url_for('adminpanel'))
-    else:  # request.method == 'GET'
+    else:  
         return render_template('edit_post.html', post=post)
+    
+@app.route('/post/<int:post_id>')
+def view_post(post_id):
+    post = Post.query.get(post_id)
+    if post is None:
+        abort(404)
+    return render_template('view_post.html', post=post)
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0')

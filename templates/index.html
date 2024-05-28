@@ -11,29 +11,27 @@
 </head>
 <body>
 
+    
     <div class="apresentation">
 
-        <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
-            <header class="masthead mb-auto navbar">
-                <div class="inner">
-                    <h3 class="masthead-brand">lucascfarias</h3>
-                    <nav class="nav nav-masthead justify-content-center">
-                        <a class="nav-item active" href="#">Home</a>
-                        <a class="nav-item" href="/">ABOUT</a>
-                        <a class="nav-item" href="">CONTACT</a>
+                <nav class="navbar navbar-expand-lg navbar-light bg-dark d-flex justify-content-center">
+
+                    <div>
+                        <a class="navbar-brand item logo">lucascfarias</a>
+                        <a class="navbar-brand items active" href="#">Home</a>
+                        <a class="navbar-brand items" href="/">About</a>
+                        <a class="navbar-brand items" href="">Contact</a>
                         {% if 'email' not in session %}
-                            <a class="nav-item" href="{{ url_for('login') }}">LOGIN WITH GOOGLE</a>
+                            <a class="navbar-brand items" href="{{ url_for('login') }}">Login with Google</a>
                         {% else %}
-                            <a class="nav-item">Hello, {{ session['name'] }}</a>
+                            <a class="navbar-brand items">Hello, {{ session['name'] }}</a>
                             {% if session['email'] == 'lucascfp2011@gmail.com' %}
-                                <a class="nav-item" href="{{ url_for('adminpanel') }}">Admin Panel</a>
+                                <a class="navbar-brand items" href="{{ url_for('adminpanel') }}">Admin Panel</a>
                             {% endif %}
-                            <a class="nav-item" href="{{ url_for('logout') }}">LOGOUT</a>
+                            <a class="navbar-brand items" href="{{ url_for('logout') }}">Logout</a>
                         {% endif %}
-                    </nav>
-                </div>
-            </header>
-        </div>
+        
+                </nav>
     
     <div class="apresentation-container">    
 
@@ -43,13 +41,13 @@
     <div class="card-group">
         {% for post in other_users_posts %}
         <div class="card" style="border-radius: 5px;">
-            <img class="card-img-top" style="border-radius: 5px;" src="{{ post.image_url }}" alt="User Image">
+            <img class="post-image" src="{{ post.cover_image_url }}" alt="Post cover image">
             <div class="card-body">
-                <h5 class="card-title"></h5>
-                <p class="card-text">{{ post.content|replace('\n', '<br/>')|safe }}</p>
+                <h5 class="card-title">{{ post.title }}</h5>
+                <p class="card-text">{{ post.content|truncate(200)|replace('\n', '<br/>')|safe }}</p>
                 <p class="card-text"><small class="text-muted">
                 <img class="avatar" src="{{ post.user_image }}" style="width: 50px; margin-right: 5px;">
-    
+                <a class="btn btn-outline-light" style="margin-bottom: 10px;" href="{{ url_for('view_post', post_id=post.id) }}">Read post</a>    
                 {{ post.user_name }}</small></p>
             </div>
             <div class="actions-card" style="background-color: rgb(94, 92, 92);">

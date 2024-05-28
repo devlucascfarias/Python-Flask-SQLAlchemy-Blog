@@ -30,7 +30,7 @@
 
             <div>
                 <a class="navbar-brand item logo">lucascfarias</a>
-                <a class="navbar-brand items" href="/">HOME</a>
+                <a class="navbar-brand items" href="/">Home</a>
                 <a class="navbar-brand items" href="{{ url_for('delete_all_posts') }}">Delete All Posts</a>
                 <a class="navbar-brand items" href="{{ url_for('delete_all_comments') }}">Delete All Comments</a>
                 {% if 'email' not in session %}
@@ -60,7 +60,11 @@
                                         <img class="avatar" src="{{ session['user_image'] }}" style="width: 40px; margin-right: 5px;">
                                     </div>
                                     <div class="col-10">
-                                        <form action="/post" method="post">
+                                        <form action="/post" method="post" enctype="multipart/form-data">
+                                            <input type="file" name="cover_image" accept="image/*">
+
+                                            <input type="text" class="form-control" id="title" name="title" required style="margin: 5px;" placeholder="Enter a title here...">
+
                                             <textarea id="editor" type="text" class="form-control" name="content" placeholder="What's up?" required></textarea>
                                             <input type="submit" class="btn btn-outline-light" value="Post">
                                         </form>
@@ -84,7 +88,9 @@
 
                             <div class="user-name-card">
 
-                                <a href=""> #{{ post.id }}</a>                              
+                                <a href=""> #{{ post.id }}</a>    
+                                
+                                {{ post.title }}
 
                             </div>
 
