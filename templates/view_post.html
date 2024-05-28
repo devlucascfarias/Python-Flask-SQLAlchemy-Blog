@@ -29,6 +29,10 @@
                                 <a class="navbar-brand items" href="{{ url_for('adminpanel') }}">Admin Panel</a>
                             {% endif %}
                             <a class="navbar-brand items" href="{{ url_for('logout') }}">Logout</a>
+
+                            <img href="" class="avatar ml-auto" src="{{ session['user_image'] }}" style="width: 30px; margin: 30px;">
+
+
                         {% endif %}
         
                 </nav>
@@ -42,7 +46,7 @@
                 <img class="post-image" src="{{ post.cover_image_url }}" alt="Post cover image">
                 <div class="card-body">
                     <h5 class="card-title">{{ post.title }}</h5>
-                    <p class="card-text">{{ post.content|truncate(200)|replace('\n', '<br/>')|safe }}</p>
+                    <p class="card-text">{{ post.content|replace('\n', '<br/>')|safe }}</p>
                     <p class="card-text"><small class="text-muted">
                     <img class="avatar" src="{{ post.user_image }}" style="width: 50px; margin-right: 5px;">
         
@@ -99,12 +103,13 @@
             </div>
         </div>
                     
-
-    <footer class="footer mt-auto py-3">
-        <div class="container">
-          <span class="text-muted"><center>https://github.com/devlucascfarias</center></span>
-        </div>
-      </footer>
+</div>
+</div>
+        <footer class="footer mt-auto py-3">
+            <div class="container">
+              <span class="footer-text"><center><small>Developed by <a href="https://github.com/devlucascfarias" target="auto_blank">https://github.com/devlucascfarias</a> — <i>Physics Student and Python Programmer</i></small></center></span>
+            </div>
+          </footer>
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
