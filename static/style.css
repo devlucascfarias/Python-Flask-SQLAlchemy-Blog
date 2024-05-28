@@ -29,9 +29,8 @@ body {
     margin: 50px;
 }
 .navbar {
-    background-color: transparent !important;
     width: 100%;
-    height: 60px;
+    height: 80px;
 }
 
 .navbar a {
@@ -119,6 +118,20 @@ a:hover {
     float: right;
 }
 
+.post-image {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    transform: scale(1.01);
+    transition: 0.3s;
+    border-radius: 5px;
+}
+
+.masthead {
+    background-color: #d3d3d3;
+
+}
+
 .post-message {
     margin-top: 10px;
 }
@@ -132,10 +145,10 @@ a:hover {
     color: #dfdada;
 }
 
-.comment-card {
+/* .comment-card {
     background: linear-gradient(to right, rgb(34, 34, 34), rgb(27, 27, 27));
 
-}
+} */
 
 .card-comment {
     padding: 10px;
