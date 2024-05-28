@@ -84,6 +84,7 @@ def adminpanel():
 @app.route('/post', methods=['POST'])
 def post():
     title = request.form.get('title')
+    tags = request.form.get('tags')
     cover_image = request.files['cover_image']
     filename = secure_filename(cover_image.filename)
     cover_image.save(os.path.join('static/img/', filename))
@@ -94,7 +95,7 @@ def post():
     user_image = session['user_image']  
     user_name = session['name']  
 
-    post = Post(title=title, content=content, user_id=user_id, user_name=user_name, user_image=user_image, cover_image_url=cover_image_url)
+    post = Post(title=title, content=content, user_id=user_id, user_name=user_name, user_image=user_image, cover_image_url=cover_image_url, tags=tags)
 
     db.session.add(post)
     db.session.commit()

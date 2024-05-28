@@ -49,6 +49,8 @@
 
     <div class="apresentation-container">
 
+        
+
                     <h3 style="margin: 20px;">Share</h3>
 
                     <div class="user-main-menu">
@@ -60,13 +62,18 @@
                                         <img class="avatar" src="{{ session['user_image'] }}" style="width: 40px; margin-right: 5px;">
                                     </div>
                                     <div class="col-10">
+                                        
                                         <form action="/post" method="post" enctype="multipart/form-data">
+                                            
                                             <input type="file" name="cover_image" accept="image/*">
 
                                             <input type="text" class="form-control" id="title" name="title" required style="margin-top: 5px; margin-bottom: 5px;" placeholder="Enter a title here...">
-
+                                            <input type="text" class="form-control" id="tags" name="tags" required style="margin-top: 5px; margin-bottom: 5px;" placeholder="Enter tags here...">
                                             <textarea id="editor" type="text" class="form-control" name="content" placeholder="What's up?" required></textarea>
                                             <input type="submit" class="btn btn-outline-light" value="Post">
+                                              <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    Botão pequeno
+  </button>
                                         </form>
                                     </div>
                                 </div>
@@ -91,6 +98,9 @@
                                 <a href=""> #{{ post.id }}</a>    
                                 
                                 {{ post.title }}
+
+                                <br>                <span class="badge badge-light" style="text-shadow: none;">{{ post.tags }}</span>
+
 
                             </div>
 

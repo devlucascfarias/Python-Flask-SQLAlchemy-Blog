@@ -3,6 +3,7 @@ from datetime import datetime
 
 class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    tags = db.Column(db.String(500), nullable=False)
     title = db.Column(db.String(100), nullable=False)
     user_name = db.Column(db.String(500), nullable=False)
     cover_image_url = db.Column(db.String(500))  

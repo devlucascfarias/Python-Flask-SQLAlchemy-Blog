@@ -104,13 +104,8 @@ a:hover {
 
 .card-group {
     width: 100%;
-    height: 400px;
     margin: 20px;
 
-}
-
-.updates-card {
-    width: 400px;
 }
 
 /* .card:hover {
@@ -260,7 +255,10 @@ float: right;
 }
 
 .footer {
-    flex-shrink: 0;
+    text-shadow: 2px 2px 4px #000000;
+
+    color: #fff !important;
+    background-color: rgb(54, 56, 56);
 }
 
 /* CSS para telas com largura maior que 1200px */
