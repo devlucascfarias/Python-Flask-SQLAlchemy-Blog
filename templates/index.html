@@ -29,6 +29,10 @@
                                 <a class="navbar-brand items" href="{{ url_for('adminpanel') }}">Admin Panel</a>
                             {% endif %}
                             <a class="navbar-brand items" href="{{ url_for('logout') }}">Logout</a>
+
+                            <img href="" class="avatar ml-auto" src="{{ session['user_image'] }}" style="width: 30px; margin: 30px;">
+
+                            
                         {% endif %}
         
                 </nav>
@@ -46,7 +50,7 @@
                 <h5 class="card-title">{{ post.title }}</h5>
                 <p class="card-text">{{ post.content|truncate(200)|replace('\n', '<br/>')|safe }}</p>
                 <p class="card-text"><small class="text-muted">
-                <img class="avatar" src="{{ post.user_image }}" style="width: 50px; margin-right: 5px;">
+                <img class="avatar" src="{{ post.user_image }}" style="width: 50px; margin-right: 5px;"><br>
                 <a class="btn btn-outline-light" style="margin-bottom: 10px;" href="{{ url_for('view_post', post_id=post.id) }}">Read post</a>    
                 {{ post.user_name }}</small></p>
             </div>
@@ -80,7 +84,7 @@
                     {% for comment in post.comments %}
                     <div class="comment-card">
                         <img class="avatar" src="{{ comment.user_image }}" alt="User Image" style="width: 40px; margin: 10px;">
-                        <a href="" class="user-name-card">{{ comment.user_name }}</a>
+                        {{ comment.user_name }}
                         <div class="card-comment">
                             {{ comment.content|replace('\n', '<br/>')|safe }}
     

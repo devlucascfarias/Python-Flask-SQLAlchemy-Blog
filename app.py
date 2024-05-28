@@ -84,7 +84,7 @@ def post():
     title = request.form.get('title')
     cover_image = request.files['cover_image']
     filename = secure_filename(cover_image.filename)
-    cover_image.save(os.path.join('static/img/post_images', filename))
+    cover_image.save(os.path.join('static/img/', filename))
     cover_image_url = url_for('static', filename='img/' + filename)
 
     content = request.form.get('content')
