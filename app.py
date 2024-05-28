@@ -38,11 +38,13 @@ google = oauth.register(
     server_metadata_url='https://accounts.google.com/.well-known/openid-configuration'
 )
 
+ADMIN_MAIL = os.getenv("ADMIN_MAIL")
+
 @app.route('/')
 def index():
     name = session.get('name', 'Guest')
     all_posts = Post.query.outerjoin(Like).group_by(Post.id).order_by(desc(func.count(Like.id))).all()
-    return render_template('index.html', other_users_posts=all_posts, name=name)
+    return render_template('index.html', other_users_posts=all_posts, name=name, ADMIN_MAIL=ADMIN_MAIL)
 
 @app.route('/logout')
 def logout():
@@ -69,7 +71,7 @@ def login():
 @app.route('/adminpanel')
 def adminpanel():
     user_id = session.get('email', None)  
-    if user_id != 'lucascfp2011@gmail.com':
+    if user_id != ADMIN_MAIL:
         abort(403)  
 
     name = session.get('name', 'Guest')
@@ -77,7 +79,7 @@ def adminpanel():
     own_posts = Post.query.filter_by(user_id=user_id).order_by(Post.created_at.desc()).all()
     other_users_posts = Post.query.filter(Post.user_id != user_id).outerjoin(Like).group_by(Post.id).order_by(desc(func.count(Like.id))).all()
 
-    return render_template('adminpanel.html', name=name, own_posts=own_posts, other_users_posts=other_users_posts, comments=comments)
+    return render_template('adminpanel.html', name=name, own_posts=own_posts, other_users_posts=other_users_posts, comments=comments, ADMIN_MAIL=ADMIN_MAIL)
 
 @app.route('/post', methods=['POST'])
 def post():
@@ -86,8 +88,8 @@ def post():
     filename = secure_filename(cover_image.filename)
     cover_image.save(os.path.join('static/img/', filename))
     cover_image_url = url_for('static', filename='img/' + filename)
-
     content = request.form.get('content')
+
     user_id = session['email']  
     user_image = session['user_image']  
     user_name = session['name']  
@@ -156,7 +158,7 @@ def delete_comment(comment_id):
 
 @app.route('/delete_all_comments', methods=['GET', 'POST'])
 def delete_all_comments():
-    if 'email' not in session or session['email'] != 'lucascfp2011@gmail.com':
+    if 'email' not in session or session['email'] != ADMIN_MAIL:
         abort(403)
 
     Comment.query.delete()
@@ -168,7 +170,7 @@ def delete_all_comments():
 
 @app.route('/delete_all_posts', methods=['GET', 'POST'])
 def delete_all_posts():
-    if 'email' not in session or session['email'] != 'lucascfp2011@gmail.com':
+    if 'email' not in session or session['email'] != ADMIN_MAIL:
         abort(403)
 
     Post.query.delete()
@@ -181,7 +183,7 @@ def delete_all_posts():
 @app.route('/edit_post/<int:post_id>', methods=['GET', 'POST'])
 def edit_post(post_id):
     user_id = session.get('email', None)  
-    if user_id != 'lucascfp2011@gmail.com':
+    if user_id != ADMIN_MAIL:
         abort(403)  
 
     post = Post.query.get(post_id)

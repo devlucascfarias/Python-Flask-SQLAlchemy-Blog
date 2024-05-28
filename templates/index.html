@@ -25,7 +25,7 @@
                             <a class="navbar-brand items" href="{{ url_for('login') }}">Login with Google</a>
                         {% else %}
                             <a class="navbar-brand items">Hello, {{ session['name'] }}</a>
-                            {% if session['email'] == 'lucascfp2011@gmail.com' %}
+                            {% if session['email'] == ADMIN_MAIL %}
                                 <a class="navbar-brand items" href="{{ url_for('adminpanel') }}">Admin Panel</a>
                             {% endif %}
                             <a class="navbar-brand items" href="{{ url_for('logout') }}">Logout</a>
@@ -50,9 +50,10 @@
                 <h5 class="card-title">{{ post.title }}</h5>
                 <p class="card-text">{{ post.content|truncate(200)|replace('\n', '<br/>')|safe }}</p>
                 <p class="card-text"><small class="text-muted">
-                <img class="avatar" src="{{ post.user_image }}" style="width: 50px; margin-right: 5px;"><br>
+                <img class="avatar" src="{{ post.user_image }}" style="width: 50px; margin-right: 5px;">
+                {{ post.user_name }}</small>
                 <a class="btn btn-outline-light" style="margin-bottom: 10px;" href="{{ url_for('view_post', post_id=post.id) }}">Read post</a>    
-                {{ post.user_name }}</small></p>
+            </p>
             </div>
             <div class="actions-card" style="background-color: rgb(94, 92, 92);">
                 <form action="{{ url_for('like_post', post_id=post.id) }}" method="post" style="display: inline;">

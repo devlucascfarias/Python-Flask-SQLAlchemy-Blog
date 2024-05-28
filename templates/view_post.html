@@ -25,7 +25,7 @@
                             <a class="navbar-brand items" href="{{ url_for('login') }}">Login with Google</a>
                         {% else %}
                             <a class="navbar-brand items">Hello, {{ session['name'] }}</a>
-                            {% if session['email'] == 'lucascfp2011@gmail.com' %}
+                            {% if session['email'] == ADMIN_MAIL %}
                                 <a class="navbar-brand items" href="{{ url_for('adminpanel') }}">Admin Panel</a>
                             {% endif %}
                             <a class="navbar-brand items" href="{{ url_for('logout') }}">Logout</a>
